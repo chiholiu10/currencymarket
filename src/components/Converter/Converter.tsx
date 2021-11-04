@@ -25,11 +25,8 @@ const Converter: FC<ConverterProps> = ({ swapStatus, currency }) => {
   
   const swapMoney = () => {
     dispatch(swapCurrency());
-    const localFrom = selectOne;
-    const localTo = selectTwo;
-
-    setSelectOne(localTo);
-    setSelectTwo(localFrom);
+    setSelectOne(selectTwo);
+    setSelectTwo(selectOne);
     console.log(selectTwo, selectOne)
   }
 
@@ -58,7 +55,9 @@ const Converter: FC<ConverterProps> = ({ swapStatus, currency }) => {
   
   <div>
     <label>From</label>
-    <select onChange={(e) => currencyOne(e)}>
+    <select onChange={(e) => currencyOne(e)}
+      value={selectOne}
+    >
       {currency.filter((item: any) => item.currency !== selectTwo).map((item: {currency: string, rate: string, timestamp: string}, index: number) => (
         <option key={index} value={item.currency}>{index === 0 ? "Please choose currency" : item.currency}</option>
       ))}
@@ -69,7 +68,9 @@ const Converter: FC<ConverterProps> = ({ swapStatus, currency }) => {
 
   <div>
     <label>To</label>
-    <select onChange={(e) => currencyTwo(e)}>
+    <select onChange={(e) => currencyTwo(e)}
+      value={selectTwo}
+    >
       {currency.filter((item: any) => item.currency !== selectOne).map((item: {currency: string, rate: string, timestamp: string}, index: number) => (
         <option key={index} value={item.currency}>{index === 0 ? "Please choose currency" : item.currency}</option>
       ))}
