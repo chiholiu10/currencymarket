@@ -6,7 +6,8 @@ export const initialState = {
 	fromValue: 0,
 	data: [],
 	currency: "",
-	historyData: []
+	historyData: [],
+	calculationData: []
 };
 
 export const reducer = (state = initialState, action: any) => {
@@ -46,6 +47,13 @@ export const reducer = (state = initialState, action: any) => {
 			return {
 				...state,
 				historyData: action.historyData
+			}
+		}
+
+		case types.SHOW_CALCULATION: {
+			return {
+				...state,
+				calculationData: action.calculationData
 			}
 		}
 

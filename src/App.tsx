@@ -1,7 +1,5 @@
-
-   
 import { FC, useCallback, useEffect, useState } from 'react';
-import { Page } from './components/Page';
+import { Page } from './Pages/Page';
 import { fetchData } from './Services/api';
 
 export const App: FC = () => {
