@@ -1,6 +1,7 @@
 # Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+API
+To achieve that, you will consume Nomics’ API http://docs.nomics.com. You can get a free API Key.
 
 ## Available Scripts
 

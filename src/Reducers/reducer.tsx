@@ -2,11 +2,11 @@ import { types } from "../Actions";
 
 export const initialState = {
 	loaded: false,
-	swap: false,
 	toValue: 0,
 	fromValue: 0,
-	rates: [],
-	data: []
+	data: [],
+	currency: "",
+	historyData: []
 };
 
 export const reducer = (state = initialState, action: any) => {
@@ -16,20 +16,6 @@ export const reducer = (state = initialState, action: any) => {
 				...state,
 				data: action.data,
 				loaded: true,
-			};
-		}
-
-		case types.GET_RATES: {
-			return {
-				...state,
-				rates: action.rates
-			};
-		}
-
-		case types.SWAP_CURRENCY: {
-			return {
-				...state,
-				swap: !state.swap
 			};
 		}
 
@@ -46,6 +32,21 @@ export const reducer = (state = initialState, action: any) => {
 				...state,
 				fromValue: action.fromValue
 			};
+		}
+
+		case types.GET_CURRENCY: {
+			return {
+				...state,
+				currency: action.currency
+			};
+		}
+
+
+		case types.SAVE_HISTORY: {
+			return {
+				...state,
+				historyData: action.historyData
+			}
 		}
 
 		default:
