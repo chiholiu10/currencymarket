@@ -1,7 +1,6 @@
-import { FC, memo } from "react";
-import { connect, ConnectedProps } from "react-redux";
+import { FC } from "react";
 
-const ConversionHistory: FC= () => {
+export const ConversionHistory: FC= () => {
   const storedCurrency = localStorage.getItem('currency') || "EUR";
 
   const storedData = JSON.parse(localStorage.getItem('history') || '{}').filter((conversion: any) => conversion.from === storedCurrency);
@@ -26,13 +25,3 @@ const ConversionHistory: FC= () => {
     </div>
   )
 }
-
-const mapStateToProps = (state: any) => ({
-  fromValue: state.reducer.fromValue,
-  storeHistory: state.reducer.historyData,
-  calculation: state.reducer.calculationData
-})
-
-const connector = connect(mapStateToProps);
-type ConversionHistoryProps = ConnectedProps<typeof connector>;
-export default connector(memo(ConversionHistory));

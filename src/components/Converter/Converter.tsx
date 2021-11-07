@@ -1,7 +1,7 @@
 import { nanoid } from "nanoid";
 import { FC, useState, memo, ChangeEvent } from "react";
 import { connect, ConnectedProps, useDispatch } from "react-redux";
-import { getCurrency, showCalculation } from "../../Actions";
+import { getCurrency } from "../../Actions";
 import { PageProps } from "../Page";
 
 type ConvertAllProps = ConverterProps & PageProps;
