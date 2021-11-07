@@ -5,7 +5,6 @@ import { getExchangeHistory } from "../../Services/api";
 import moment from "moment";
 
 const ExchangeHistory: FC<ExchangeHistoryProps> = ({currentCurrency, storeHistory}) => {
-  console.log(storeHistory);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState<boolean>(false);
   const [dayValue, setDayValue] = useState<string>("");

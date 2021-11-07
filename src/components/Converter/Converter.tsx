@@ -1,7 +1,7 @@
 import { nanoid } from "nanoid";
 import { FC, useState, memo, ChangeEvent } from "react";
 import { connect, ConnectedProps, useDispatch } from "react-redux";
-import { getCurrency } from "../../Actions";
+import { getCurrency, showCalculation } from "../../Actions";
 import { PageProps } from "../Page";
 
 type ConvertAllProps = ConverterProps & PageProps;
@@ -13,8 +13,12 @@ const Converter: FC<ConvertAllProps> = ({ calculation, listRates }) => {
   const [selectTwo, setSelectTwo] = useState<string>("");
   const [currentCurrency, setCurrentCurrency] = useState<number>(0);
   let historyArray: Array<any> = [];
-  console.log(historyArray)
-  const moneyAmount = (currentAmount: any) => setAmount(currentAmount.target.value);
+  const disabledSwap = selectOne.length === 0 || selectTwo.length === 0;
+
+  const moneyAmount = (currentAmount: any) => {
+    const value = currentAmount.target.value.replace(/^0+(\d)/, '$1');
+    setAmount(value.toString());
+  }
   
   const swapMoney = () => {
     setSelectOne(selectTwo);
@@ -53,7 +57,7 @@ const Converter: FC<ConvertAllProps> = ({ calculation, listRates }) => {
     }
 
     historyArray.push(history);
-    console.log(historyArray)
+
     localStorage.setItem(
       'history',
         JSON.stringify(historyArray),
@@ -74,14 +78,14 @@ const Converter: FC<ConvertAllProps> = ({ calculation, listRates }) => {
       <input
         type="number"
         value={amount}
-        onChange={(e) => moneyAmount(e)}
+        onChange={moneyAmount}
       />
     </div>
   
   <div>
     <label>From</label>
     <select 
-      onChange={(e) => currencyOne(e)}
+      onChange={currencyOne}
       value={selectOne}
     >
       {listRates?.filter((item: any) => item.currency !== selectTwo).map((item: {currency: string, rate: string, timestamp: string}, index: number) => (
@@ -90,12 +94,12 @@ const Converter: FC<ConvertAllProps> = ({ calculation, listRates }) => {
     </select>
   </div>
 
-  <button disabled={selectOne.length === 0 && selectTwo.length === 0} onClick={swapMoney}>Swap</button>
+  <button disabled={disabledSwap} onClick={swapMoney}>Swap</button>
 
   <div>
     <label>To</label>
     <select 
-      onChange={(e) => currencyTwo(e)}
+      onChange={currencyTwo}
       value={selectTwo}
     >
       {listRates?.filter((item: any) => item.currency !== selectOne).map((item: {currency: string, rate: string, timestamp: string}, index: number) => (
@@ -104,7 +108,7 @@ const Converter: FC<ConvertAllProps> = ({ calculation, listRates }) => {
     </select>
   </div>
 
-  <button onClick={convert}>Convert</button>
+  <button onClick={convert} disabled={disabledSwap || !(amount > 0)}>Convert</button>
   
   <div>
     {calculation.length !== 0 && (
@@ -120,7 +124,6 @@ const Converter: FC<ConvertAllProps> = ({ calculation, listRates }) => {
 }
 
 const mapStateToProps = (state: any) => {
-  console.log(state.reducer.calculationData)
   return {
     fromValue: state.reducer.fromValue,
     storeHistory: state.reducer.historyData,
