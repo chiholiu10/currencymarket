@@ -54,8 +54,6 @@ const ExchangeHistory: FC<ExchangeHistoryProps> = ({currentCurrency, storeHistor
             <div key={index}>
               {moment(item.timestamp).format("DD/MM/YYYY")}
               {Number(item.rate).toFixed(6)}
-
-            
             </div>
           ))}
         </div>

@@ -12,7 +12,7 @@ const Converter: FC<ConvertAllProps> = ({ calculation, listRates }) => {
   const [selectOne, setSelectOne] = useState<string>( localStorage.getItem('currency') || "EUR");
   const [selectTwo, setSelectTwo] = useState<string>("");
   const [currentCurrency, setCurrentCurrency] = useState<number>(0);
-  let historyArray: Array<any> = [];
+
   const disabledSwap = selectOne.length === 0 || selectTwo.length === 0;
 
   const moneyAmount = (currentAmount: any) => {
@@ -46,6 +46,24 @@ const Converter: FC<ConvertAllProps> = ({ calculation, listRates }) => {
     dispatch(showCalculation(data));
   }
 
+  let data = localStorage.getItem("history");
+  let historyArray: Array<any> = data ? JSON.parse(data) : [];
+
+  const storeData = (data: any) => {
+    historyArray.push(data);
+    localStorage.setItem(
+      'history',
+        JSON.stringify(historyArray),
+    );
+  }
+
+  const storeCurrency = (recentCurrency: string) => {
+    localStorage.setItem(
+      'currency',
+        recentCurrency
+    );
+  }
+
   const convert = () => {
     dispatch(getCurrency(selectOne));
     const history = {
@@ -56,17 +74,8 @@ const Converter: FC<ConvertAllProps> = ({ calculation, listRates }) => {
       to: selectTwo
     }
 
-    historyArray.push(history);
-
-    localStorage.setItem(
-      'history',
-        JSON.stringify(historyArray),
-    );
-
-    localStorage.setItem(
-      'currency',
-        selectOne
-    );
+    storeData(history);
+    storeCurrency(selectOne);
     converterResult();
   }
 
