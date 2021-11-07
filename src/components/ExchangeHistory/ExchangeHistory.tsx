@@ -52,16 +52,18 @@ const ExchangeHistory: FC<ExchangeHistoryProps> = ({currentCurrency, storeHistor
         <div>
           {storeHistory.map((item: any, index: number) => (
             <div key={index}>
-              {item.timestamp}
-              {item.rate}
+              {moment(item.timestamp).format("DD/MM/YYYY")}
+              {Number(item.rate).toFixed(6)}
+
+            
             </div>
           ))}
         </div>
 
         <h2>Statics</h2>
-        <p>Lowest{Math.min.apply(Math, storeHistory.map((item: {rate: string }) => item.rate))}</p>
-        <p>Highest {Math.max.apply(Math, storeHistory.map((item: {rate: string }) => item.rate))}</p>
-        <p>Average {sumValues / historyDays}</p>
+        <p>Lowest {Math.min.apply(Math, storeHistory.map((item: {rate: string }) => item.rate)).toFixed(7)}</p>
+        <p>Highest {Math.max.apply(Math, storeHistory.map((item: {rate: string }) => item.rate)).toFixed(7)}</p>
+        <p>Average {(sumValues / historyDays).toFixed(7)}</p>
       </div>
     )}
 
