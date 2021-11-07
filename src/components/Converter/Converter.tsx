@@ -1,7 +1,7 @@
 import { nanoid } from "nanoid";
 import { FC, useState, memo, ChangeEvent } from "react";
 import { connect, ConnectedProps, useDispatch } from "react-redux";
-import { getCurrency, showCalculation } from "../../Actions";
+import { conversionHistory, getCurrency, showCalculation } from "../../Actions";
 import { PageProps } from "../Page";
 
 type ConvertAllProps = ConverterProps & PageProps;
@@ -55,6 +55,8 @@ const Converter: FC<ConvertAllProps> = ({ calculation, listRates }) => {
       'history',
         JSON.stringify(historyArray),
     );
+
+    dispatch(conversionHistory(JSON.parse(localStorage.getItem("history", ) || '{}')));
   }
 
   const storeCurrency = (recentCurrency: string) => {
@@ -133,6 +135,7 @@ const Converter: FC<ConvertAllProps> = ({ calculation, listRates }) => {
 }
 
 const mapStateToProps = (state: any) => {
+  console.log(state)
   return {
     fromValue: state.reducer.fromValue,
     storeHistory: state.reducer.historyData,

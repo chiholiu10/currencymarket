@@ -5,7 +5,8 @@ export const types = {
   FROM_VALUE: "FROM_VALUE",
   SAVE_HISTORY: "SAVE_HISTORY",
   GET_CURRENCY: "GET_CURRENCY",
-  SHOW_CALCULATION: "SHOW_CALCULATION"
+  SHOW_CALCULATION: "SHOW_CALCULATION",
+  CONVERSION_HISTORY: "CONVERSION_HISTORY"
 };
 
 export const getData = (data: Array<string | number>) => ({
@@ -39,6 +40,11 @@ export const getCurrency = (currency: string) => ({
 export const showCalculation = (calculationData: any) => ({
   type: types.SHOW_CALCULATION,
   calculationData
+});
+
+export const conversionHistory = (currentConversionHistory: any) => ({
+  type: types.CONVERSION_HISTORY,
+  currentConversionHistory
 })
 
 export type HistoryProps = {

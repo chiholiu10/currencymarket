@@ -1,6 +1,6 @@
 import { FC, useCallback, useEffect, useState } from 'react';
 import { Routes, Route } from "react-router-dom";
-import { ConversionHistory } from './components/ConversionHistory/ConversionHistory';
+import ConversionHistory from './components/ConversionHistory/ConversionHistory';
 import { Header } from './components/Header/Header';
 import { Page } from './components/Page';
 import { fetchData } from './Services/api';
