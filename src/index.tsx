@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 import reducer from './Reducers';
 import thunk from "redux-thunk";
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from "react-router-dom";
 
 const store = createStore(
   reducer,
@@ -13,7 +14,9 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>,
   document.getElementById('root')
 );

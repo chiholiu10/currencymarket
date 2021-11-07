@@ -7,3 +7,13 @@ export const fetchData = async () => {
     console.error(err);
   }
 }
+
+export const getExchangeHistory = async (currency: string, today: string, days: string) => {
+  try {
+    const data = await fetch(`https://api.nomics.com/v1/exchange-rates/history?key=${process.env.REACT_APP_API_KEY}&currency=${currency}&start=${days}T00%3A00%3A00Z&end=${today}T00%3A00%3A00Z0`)
+    .then(response => response.json());
+    return data;
+  } catch(err) {
+    console.error(err)
+  }
+}
