@@ -6,6 +6,7 @@ export const CSSreset = createGlobalStyle(
       line-height: 1.15;
       width: 100vw;
       -webkit-text-size-adjust: 100%;
+      font-family: ${theme.fonts.body};
     }
     body {
       margin: 0;

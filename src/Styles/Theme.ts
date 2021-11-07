@@ -5,9 +5,9 @@ const theme: DefaultTheme = {
   colors: {
     white: "#fff",
     black: "#757575",
-    grey: "#212121",
-    blue: "#0096FF",
-    red: "#FF0000"
+    green: "#26a69a",
+    lightgrey: "#CDCDCD",
+    lightGreen: "#90ee9"
   },
   // typography
   fontWeights: {
@@ -19,8 +19,8 @@ const theme: DefaultTheme = {
     black: 900
   },
   fonts: {
-    heading: '"Roboto", sans-serif',
-    body: '"Roboto", sans-serif'
+    heading: '"Raleway", sans-serif',
+    body: '"Raleway", sans-serif'
   },
   breakpoints: [200, 640, 768, 1024, 1440]
 };

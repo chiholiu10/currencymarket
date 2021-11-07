@@ -2,49 +2,46 @@ import { nanoid } from "nanoid";
 import { FC, useState, memo, ChangeEvent } from "react";
 import { connect, ConnectedProps, useDispatch } from "react-redux";
 import { conversionHistory, getCurrency, showCalculation } from "../../Actions";
-import { PageProps } from "../Page";
+import { CalculatedResult, CalculationBlock, CalculationCapital, CalculationSmall, ConvertBigLetter, ConvertButton, FilterBlock, Input, InputBlock, InputSelect, Label, SwapButton, Title } from "./Converter.styles";
 
-type ConvertAllProps = ConverterProps & PageProps;
-
-const Converter: FC<ConvertAllProps> = ({ calculation, listRates }) => {
+const Converter: FC<ConverterProps> = ({ calculation, listRates }) => {
   const dispatch = useDispatch();
-  const [amount, setAmount] = useState<any>(0);
-  const [selectOne, setSelectOne] = useState<string>( localStorage.getItem('currency') || "EUR");
+  const [amount, setAmount] = useState<number>(0);
+  const [selectOne, setSelectOne] = useState<string>(localStorage.getItem('currency') || "EUR");
   const [selectTwo, setSelectTwo] = useState<string>("");
   const [currentCurrency, setCurrentCurrency] = useState<number>(0);
-
-  const disabledSwap = selectOne.length === 0 || selectTwo.length === 0;
+  const disabledSwap: boolean = selectOne.length === 0 || selectTwo.length === 0;
 
   const moneyAmount = (currentAmount: any) => {
     const value = currentAmount.target.value.replace(/^0+(\d)/, '$1');
-    setAmount(value.toString());
-  }
-  
+    setAmount(value);
+  };
+
   const swapMoney = () => {
     setSelectOne(selectTwo);
     setSelectTwo(selectOne);
-  }
+  };
 
   const currencyOne = (value: ChangeEvent<HTMLSelectElement>) => {
     listRates.includes(value.target.value);
     setSelectOne(value.target.value);
-  }
+  };
 
   const currencyTwo = (value: ChangeEvent<HTMLSelectElement>) => {
     setSelectTwo(value.target.value);
     const current: any = listRates.filter((element: any) => element.currency === value.target.value);
     setCurrentCurrency(current[0].rate);
-  }
+  };
 
-  const converterResult = ( ) => {
+  const converterResult = () => {
     const data = {
       firstCurrency: amount + " " + selectOne,
-      secondCurrency: String((amount / currentCurrency).toFixed(3)) + " " +  selectTwo,
+      secondCurrency: String((amount / currentCurrency).toFixed(3)) + " " + selectTwo,
       valueFirstCurrency: 1 + " " + selectOne + " = " + Number(currentCurrency).toFixed(6) + " " + selectTwo,
       valueSecondCurrency: 1 + " " + selectTwo + " = " + String((1 / currentCurrency).toFixed(6)) + " " + selectOne
-    }
+    };
     dispatch(showCalculation(data));
-  }
+  };
 
   let data = localStorage.getItem("history");
   let historyArray: Array<any> = data ? JSON.parse(data) : [];
@@ -53,18 +50,17 @@ const Converter: FC<ConvertAllProps> = ({ calculation, listRates }) => {
     historyArray.push(data);
     localStorage.setItem(
       'history',
-        JSON.stringify(historyArray),
+      JSON.stringify(historyArray),
     );
-
-    dispatch(conversionHistory(JSON.parse(localStorage.getItem("history", ) || '{}')));
-  }
+    dispatch(conversionHistory(JSON.parse(localStorage.getItem("history",) || '{}')));
+  };
 
   const storeCurrency = (recentCurrency: string) => {
     localStorage.setItem(
       'currency',
-        recentCurrency
+      recentCurrency
     );
-  }
+  };
 
   const convert = () => {
     dispatch(getCurrency(selectOne));
@@ -74,72 +70,72 @@ const Converter: FC<ConvertAllProps> = ({ calculation, listRates }) => {
       amount: amount,
       from: selectOne,
       to: selectTwo
-    }
+    };
 
     storeData(history);
     storeCurrency(selectOne);
     converterResult();
-  }
+  };
 
   return (
-  <div>
-    Converter
     <div>
-      <label>Amount</label>
-      <input
-        type="number"
-        value={amount}
-        onChange={moneyAmount}
-      />
+      <Title>I want to convert</Title>
+      <FilterBlock>
+        <InputBlock>
+          <Label>Amount</Label>
+          <Input
+            type="number"
+            value={amount}
+            onChange={moneyAmount}
+          />
+        </InputBlock>
+
+        <InputBlock>
+          <Label>From</Label>
+          <InputSelect
+            onChange={currencyOne}
+            value={selectOne}
+          >
+            {listRates?.filter((item: any) => item.currency !== selectTwo).map((item: { currency: string, rate: string, timestamp: string; }, index: number) => (
+              <option key={index} value={item.currency}>{index === 0 ? "Please choose currency" : item.currency}</option>
+            ))}
+          </InputSelect>
+        </InputBlock>
+
+        <SwapButton data-testid="swapper-button" disabled={disabledSwap} onClick={swapMoney}>Swap</SwapButton>
+
+        <InputBlock>
+          <Label>To</Label>
+          <InputSelect
+            onChange={currencyTwo}
+            value={selectTwo}
+          >
+            {listRates?.filter((item: any) => item.currency !== selectOne).map((item: { currency: string, rate: string, timestamp: string; }, index: number) => (
+              <option key={index} value={item.currency}>{index === 0 ? "Please choose currency" : item.currency}</option>
+            ))}
+          </InputSelect>
+        </InputBlock>
+
+        <ConvertButton onClick={convert} disabled={disabledSwap || !(amount > 0)}>Convert</ConvertButton>
+      </FilterBlock>
+      <CalculatedResult>
+
+        {calculation.length !== 0 && (
+          <CalculationBlock data-testid="calculation-block">
+            <CalculationCapital>{calculation.firstCurrency} <span> = </span> <ConvertBigLetter>{calculation.secondCurrency}</ConvertBigLetter></CalculationCapital>
+            <CalculationSmall>{calculation.valueFirstCurrency}</CalculationSmall>
+            <CalculationSmall>{calculation.valueSecondCurrency}</CalculationSmall>
+          </CalculationBlock>
+        )}
+      </CalculatedResult>
     </div>
-  
-  <div>
-    <label>From</label>
-    <select 
-      onChange={currencyOne}
-      value={selectOne}
-    >
-      {listRates?.filter((item: any) => item.currency !== selectTwo).map((item: {currency: string, rate: string, timestamp: string}, index: number) => (
-        <option key={index} value={item.currency}>{index === 0 ? "Please choose currency" : item.currency}</option>
-      ))}
-    </select>
-  </div>
-
-  <button disabled={disabledSwap} onClick={swapMoney}>Swap</button>
-
-  <div>
-    <label>To</label>
-    <select 
-      onChange={currencyTwo}
-      value={selectTwo}
-    >
-      {listRates?.filter((item: any) => item.currency !== selectOne).map((item: {currency: string, rate: string, timestamp: string}, index: number) => (
-        <option key={index} value={item.currency}>{index === 0 ? "Please choose currency" : item.currency}</option>
-      ))}
-    </select>
-  </div>
-
-  <button onClick={convert} disabled={disabledSwap || !(amount > 0)}>Convert</button>
-  
-  <div>
-    {calculation.length !== 0 && (
-      <>
-        <div>{calculation.firstCurrency} <span> = </span> {calculation.secondCurrency}</div>
-        <div>{calculation.valueFirstCurrency}</div>
-        <div>{calculation.valueSecondCurrency}</div>
-      </>
-    )}
-
-  </div>
-  </div>)
-}
+  );
+};
 
 const mapStateToProps = (state: any) => {
-  console.log(state)
   return {
-    fromValue: state.reducer.fromValue,
-    storeHistory: state.reducer.historyData,
-    calculation: state.reducer.calculationData
+    listRates: state.reducer.rateList,
+    calculation: state.reducer.calculationData || [],
   };
 };
 

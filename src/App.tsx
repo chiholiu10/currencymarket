@@ -1,20 +1,20 @@
-import { FC, useCallback, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Routes, Route } from "react-router-dom";
+import { setListRates } from './Actions';
 import ConversionHistory from './components/ConversionHistory/ConversionHistory';
 import { Header } from './components/Header/Header';
 import { Page } from './components/Page';
 import { fetchData } from './Services/api';
 
 export const App: FC = () => {
-  const [listRates, setListRates] = useState([]);
-  const [, setLoading] = useState<boolean>(false);
-  
+  const dispatch = useDispatch();
+
   const loadRates = useCallback(async () => {
-    setLoading(false);
     try {
       const allRates = await fetchData();
-      setListRates(allRates);
-    } catch(err) {
+      dispatch(setListRates(allRates));
+    } catch (err) {
       console.error(err);
     }
   }, []);
@@ -25,11 +25,11 @@ export const App: FC = () => {
 
   return (
     <>
-    <Header/>
-    <Routes>
-      <Route path="/" element={<Page listRates={listRates}/>}/>
-      <Route path="/history" element={<ConversionHistory/>}/>
-    </Routes>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Page />} />
+        <Route path="/history" element={<ConversionHistory />} />
+      </Routes>
     </>
-  )
-}
+  );
+};

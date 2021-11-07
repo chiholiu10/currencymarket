@@ -27,5 +27,5 @@
     "**/src/**/*.ts",
     "/src/**/*.d.ts",
     "**/*.tsx"
-  ]
+    ,"src/Store.tsx"  ]
 }

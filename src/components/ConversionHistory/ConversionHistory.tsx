@@ -1,48 +1,70 @@
-import { FC, memo, useEffect, useState } from "react";
+import { FC, memo, useEffect } from "react";
 import moment from "moment";
 import { conversionHistory } from "../../Actions";
 import { connect, ConnectedProps, useDispatch } from "react-redux";
+import { Table, TableColumns, Tbody, Td, Th, Theader, Tr } from "../ExchangeHistory/ExchangeHistory.styles";
+import { DeleteButton } from "./Conversion.styles";
+
+type ConversionProps = {
+  id: number,
+  date: string,
+  amount: string,
+  from: string,
+  to: string;
+};
 
 const ConversionHistory: FC<ConversionHistoryProps> = ({ storeHistory }) => {
   const dispatch = useDispatch();
-  const localCurrency = localStorage.getItem('currency')
-
-  storeHistory.filter((conversion: any) => console.log(conversion.from === localCurrency))
-  const updateHistoryArray = localCurrency ? storeHistory.filter((conversion: {from: string}) => conversion.from === localCurrency) : storeHistory;
-
+  const localCurrency = localStorage.getItem('currency');
+  const updateHistoryArray = localCurrency ? storeHistory.filter((conversion: { from: string; }) => conversion.from === localCurrency) : storeHistory;
+  const getLocalStorage = JSON.parse(localStorage.getItem("history") || '{}');
   useEffect(() => {
-    dispatch(conversionHistory(JSON.parse(localStorage.getItem("history") || '{}')));
+    dispatch(conversionHistory(getLocalStorage));
   }, [dispatch]);
 
   const deleteHistory = (clickedItem: number) => {
-    const storedNames = JSON.parse(localStorage.getItem('history') || '{}');
-    const value = JSON.parse(localStorage.getItem('history') || '{}').findIndex((item: any) => item.id === clickedItem);
-    
+    const storedNames = getLocalStorage;
+    const value = getLocalStorage.findIndex((item: any) => item.id === clickedItem);
+
     storedNames.splice(value, 1);
     localStorage.setItem("history", JSON.stringify(storedNames));
-    dispatch(conversionHistory(JSON.parse(localStorage.getItem("history") || '{}')));
-  }
+    dispatch(conversionHistory(getLocalStorage));
+  };
 
   return (
     <div>
-      {updateHistoryArray && (
-        updateHistoryArray.map((item: {id: number, date: string, amount: strin}) => (
-            <div key={item.id}>
-              <div>{moment(item.date).format("DD/MM/YYYY") + " @ " + moment(item.date).format("HH:mm")}</div>
-              <p>Converted an amount {item.amount} {item.from} of {item.to}</p>
-              <div onClick={() => deleteHistory(item.id)}>click</div>
-            </div>
-          )
-        )
-      )}
+      <h1>Conversion History</h1>
+      <TableColumns>
+        <Table>
+          <Theader>
+            <Tr>
+              <Th>Date</Th>
+              <Th>Event</Th>
+              <Th>Actions</Th>
+            </Tr>
+          </Theader>
+          <Tbody>
+            {updateHistoryArray && (
+              updateHistoryArray.map((item: ConversionProps) => (
+                <Tr key={item.id}>
+                  <Td>{moment(item.date).format("DD/MM/YYYY") + " @ " + moment(item.date).format("HH:mm")}</Td>
+                  <Td>Converted an amount {item.amount} {item.from} of {item.to}</Td>
+                  <Td><DeleteButton onClick={() => deleteHistory(item.id)}>delete</DeleteButton></Td>
+                </Tr>
+              )
+              )
+            )}
+          </Tbody>
+        </Table>
+      </TableColumns>
     </div>
-  )
-}
+  );
+};
 
 
 const mapStateToProps = (state: any) => ({
-    currentCurrency: state.reducer.currency || "EU",
-    storeHistory: state.reducer.currentConversionHistory
+  currentCurrency: state.reducer.currency || "EU",
+  storeHistory: state.reducer.currentConversionHistory
 });
 
 const connector = connect(mapStateToProps);
