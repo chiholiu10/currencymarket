@@ -105,7 +105,7 @@ const Converter: FC<ConverterProps> = ({ calculation, listRates }) => {
           </InputSelect>
         </InputBlock>
 
-        <SwapButton data-testid="swapper-button" disabled={disabledSwap} onClick={swapMoney}>Swap</SwapButton>
+        <SwapButton disabled={disabledSwap} onClick={swapMoney}>Swap</SwapButton>
 
         <InputBlock>
           <Label>To</Label>
@@ -124,7 +124,7 @@ const Converter: FC<ConverterProps> = ({ calculation, listRates }) => {
       <CalculatedResult>
 
         {calculation.length !== 0 && (
-          <CalculationBlock data-testid="calculation-block">
+          <CalculationBlock>
             <CalculationCapital>{calculation.firstCurrency} <span> = </span> <ConvertBigLetter>{calculation.secondCurrency}</ConvertBigLetter></CalculationCapital>
             <CalculationSmall>{calculation.valueFirstCurrency}</CalculationSmall>
             <CalculationSmall>{calculation.valueSecondCurrency}</CalculationSmall>

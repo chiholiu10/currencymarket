@@ -74,4 +74,6 @@ export const CalculatedResult = styled.div`
   align-items: center;
 `;
 
-export const CalculationBlock = styled.div``;
+export const CalculationBlock = styled.div`
+  text-align: center;
+`;

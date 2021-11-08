@@ -95,7 +95,7 @@ const ExchangeHistory: FC<ExchangeHistoryProps> = ({ currentCurrency, storeHisto
             </Table>
           </TableBlock>
         </TableColumns>
-      ) : <div data-testid="not-loaded"></div>}
+      ) : <div></div>}
 
     </div>
   );
