@@ -20,7 +20,6 @@ ReactDOM.render(
     <ThemeProvider theme={theme}>
       <CSSreset />
       <BrowserRouter>
-
         <App />
       </BrowserRouter>
     </ThemeProvider>
