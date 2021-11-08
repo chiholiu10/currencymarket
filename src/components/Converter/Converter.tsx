@@ -7,7 +7,6 @@ import { ConversationHistoryProps, RateListProps } from "../../Type/Type";
 import { CalculatedResult, CalculationBlock, CalculationCapital, CalculationSmall, ConvertBigLetter, ConvertButton, FilterBlock, Input, SwapButton, Title } from "./Converter.styles";
 
 const Converter: FC<ConverterProps> = ({ calculation, listRates }) => {
-  console.log(listRates);
   const dispatch = useDispatch();
   const [amount, setAmount] = useState<number>(0);
   const [selectOne, setSelectOne] = useState<string>(localStorage.getItem('currency') || "EUR");
