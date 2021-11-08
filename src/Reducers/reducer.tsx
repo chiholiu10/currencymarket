@@ -12,6 +12,8 @@ export const initialState = {
 	rateList: []
 };
 
+// ALL_RATES: "ALL_RATES"
+
 export const reducer = (state = initialState, action: any) => {
 	switch (action.type) {
 		case types.GET_DATA: {
@@ -19,20 +21,6 @@ export const reducer = (state = initialState, action: any) => {
 				...state,
 				data: action.data,
 				loaded: true,
-			};
-		}
-
-		case types.TO_VALUE: {
-			return {
-				...state,
-				toValue: action.toValue
-			};
-		}
-
-		case types.FROM_VALUE: {
-			return {
-				...state,
-				fromValue: action.fromValue
 			};
 		}
 
@@ -57,14 +45,14 @@ export const reducer = (state = initialState, action: any) => {
 			};
 		}
 
-		case types.CONVERSION_HISTORY: {
+		case types.GET_CONVERSION_HISTORY: {
 			return {
 				...state,
 				currentConversionHistory: action.currentConversionHistory
 			};
 		}
 
-		case types.ALL_RATES: {
+		case types.SET_LIST_RATES: {
 			return {
 				...state,
 				rateList: action.rateList

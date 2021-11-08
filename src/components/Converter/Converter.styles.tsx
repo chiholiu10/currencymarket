@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { breakpoint } from "../../Styles/BreakPoint";
 import theme from "../../Styles/Theme";
+import { breakpoint } from "../../Styles/BreakPoint";
 
 export const Title = styled.h1`
   font-size: 22px;

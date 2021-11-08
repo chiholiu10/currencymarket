@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Routes, Route } from "react-router-dom";
 import { setListRates } from './Actions';
@@ -9,18 +9,21 @@ import { fetchData } from './Services/api';
 
 export const App: FC = () => {
   const dispatch = useDispatch();
+  const [, setIsMounted] = useState<boolean>(true);
 
   const loadRates = useCallback(async () => {
     try {
       const allRates = await fetchData();
       dispatch(setListRates(allRates));
+      setIsMounted(false);
     } catch (err) {
       console.error(err);
     }
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     loadRates();
+    return () => setIsMounted(true);
   }, [loadRates]);
 
   return (

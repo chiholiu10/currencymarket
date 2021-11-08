@@ -1,6 +1,6 @@
 import { FC, memo, useCallback, useEffect, useState } from "react";
 import { connect, ConnectedProps, useDispatch } from "react-redux";
-import { getHistory } from "../../Actions";
+import { saveHistory } from "../../Actions";
 import { getExchangeHistory } from "../../Services/api";
 import moment from "moment";
 import { Table, Tr, Th, Td, TableColumns, TableBlock, Theader, Tbody } from "./ExchangeHistory.styles";
@@ -19,7 +19,7 @@ const ExchangeHistory: FC<ExchangeHistoryProps> = ({ currentCurrency, storeHisto
     setLoading(false);
     try {
       const recentHistory = await getExchangeHistory(currentCurrency, today, days);
-      dispatch(getHistory(recentHistory));
+      dispatch(saveHistory(recentHistory));
       setLoading(true);
     } catch (err) {
       console.error(err);

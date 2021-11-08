@@ -1,13 +1,10 @@
 export const types = {
   GET_DATA: "GET_DATA",
-  SWAP_CURRENCY: "SWAP_CURRENCY",
-  TO_VALUE: "TO_VALUE",
-  FROM_VALUE: "FROM_VALUE",
   SAVE_HISTORY: "SAVE_HISTORY",
   GET_CURRENCY: "GET_CURRENCY",
   SHOW_CALCULATION: "SHOW_CALCULATION",
-  CONVERSION_HISTORY: "CONVERSION_HISTORY",
-  ALL_RATES: "ALL_RATES"
+  GET_CONVERSION_HISTORY: "GET_CONVERSION_HISTORY",
+  SET_LIST_RATES: "SET_LIST_RATES"
 };
 
 export const getData = (data: Array<string | number>) => ({
@@ -20,17 +17,9 @@ type HistoryDataProps = {
   rate: string;
 };
 
-export const getHistory = (historyData: HistoryDataProps) => ({
+export const saveHistory = (historyData: HistoryDataProps) => ({
   type: types.SAVE_HISTORY,
   historyData
-});
-
-export const selectOneValue = () => ({
-  type: types.TO_VALUE,
-});
-
-export const selectTwoValue = () => ({
-  type: types.FROM_VALUE
 });
 
 export const getCurrency = (currency: string) => ({
@@ -43,12 +32,12 @@ export const showCalculation = (calculationData: any) => ({
   calculationData
 });
 
-export const conversionHistory = (currentConversionHistory: any) => ({
-  type: types.CONVERSION_HISTORY,
+export const getConversionHistory = (currentConversionHistory: any) => ({
+  type: types.GET_CONVERSION_HISTORY,
   currentConversionHistory
 });
 
 export const setListRates = (rateList: any) => ({
-  type: types.ALL_RATES,
+  type: types.SET_LIST_RATES,
   rateList
 });

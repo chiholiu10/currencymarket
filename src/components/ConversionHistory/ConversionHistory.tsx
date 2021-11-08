@@ -1,9 +1,9 @@
-import { FC, memo, useEffect } from "react";
-import moment from "moment";
-import { conversionHistory } from "../../Actions";
+import { FC, memo, useCallback, useEffect } from "react";
+import { getConversionHistory } from "../../Actions";
 import { connect, ConnectedProps, useDispatch } from "react-redux";
 import { Table, TableColumns, Tbody, Td, Th, Theader, Tr } from "../ExchangeHistory/ExchangeHistory.styles";
 import { DeleteButton } from "./Conversion.styles";
+import moment from "moment";
 
 type ConversionProps = {
   id: number,
@@ -18,9 +18,14 @@ const ConversionHistory: FC<ConversionHistoryProps> = ({ storeHistory }) => {
   const localCurrency = localStorage.getItem('currency');
   const updateHistoryArray = localCurrency ? storeHistory.filter((conversion: { from: string; }) => conversion.from === localCurrency) : storeHistory;
   const getLocalStorage = JSON.parse(localStorage.getItem("history") || '{}');
-  useEffect(() => {
-    dispatch(conversionHistory(getLocalStorage));
+
+  const checkLocalStorage = useCallback(() => {
+    dispatch(getConversionHistory(JSON.parse(localStorage.getItem("history") || '{}')));
   }, [dispatch]);
+
+  useEffect(() => {
+    checkLocalStorage();
+  }, [checkLocalStorage]);
 
   const deleteHistory = (clickedItem: number) => {
     const storedNames = getLocalStorage;
@@ -28,7 +33,7 @@ const ConversionHistory: FC<ConversionHistoryProps> = ({ storeHistory }) => {
 
     storedNames.splice(value, 1);
     localStorage.setItem("history", JSON.stringify(storedNames));
-    dispatch(conversionHistory(getLocalStorage));
+    dispatch(getConversionHistory(getLocalStorage));
   };
 
   return (

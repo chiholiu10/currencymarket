@@ -19,13 +19,12 @@
     "jsx": "react-jsx",
     "types": [
       "node"
-    ],
-    "module": "esnext"
+    ]
   },
   "include": [
     "/src/**/*.ts",
     "**/src/**/*.ts",
     "/src/**/*.d.ts",
     "**/*.tsx"
-    ,"src/Store.tsx"  ]
+  ]
 }

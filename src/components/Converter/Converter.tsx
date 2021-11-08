@@ -1,7 +1,7 @@
 import { nanoid } from "nanoid";
 import { FC, useState, memo, ChangeEvent } from "react";
 import { connect, ConnectedProps, useDispatch } from "react-redux";
-import { conversionHistory, getCurrency, showCalculation } from "../../Actions";
+import { getConversionHistory, getCurrency, showCalculation } from "../../Actions";
 import { CalculatedResult, CalculationBlock, CalculationCapital, CalculationSmall, ConvertBigLetter, ConvertButton, FilterBlock, Input, InputBlock, InputSelect, Label, SwapButton, Title } from "./Converter.styles";
 
 const Converter: FC<ConverterProps> = ({ calculation, listRates }) => {
@@ -52,7 +52,7 @@ const Converter: FC<ConverterProps> = ({ calculation, listRates }) => {
       'history',
       JSON.stringify(historyArray),
     );
-    dispatch(conversionHistory(JSON.parse(localStorage.getItem("history",) || '{}')));
+    dispatch(getConversionHistory(JSON.parse(localStorage.getItem("history",) || '{}')));
   };
 
   const storeCurrency = (recentCurrency: string) => {
