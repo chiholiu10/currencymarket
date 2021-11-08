@@ -29,8 +29,6 @@ const ConversionHistory: FC<ConversionHistoryProps> = ({ storeHistory }) => {
     dispatch(getConversionHistory(getLocalStorage));
   };
 
-  console.log(getLocalStorage);
-
   return (
     <div>
       <h1>Conversion History</h1>
