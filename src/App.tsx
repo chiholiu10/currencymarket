@@ -14,6 +14,7 @@ export const App: FC = () => {
   const loadRates = useCallback(async () => {
     try {
       const allRates = await fetchData();
+      console.log(allRates);
       dispatch(setListRates(allRates));
       setIsMounted(false);
     } catch (err) {

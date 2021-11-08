@@ -3,9 +3,11 @@ import { FC, useState, memo, ChangeEvent } from "react";
 import { connect, ConnectedProps, useDispatch } from "react-redux";
 import { getConversionHistory, getCurrency, showCalculation } from "../../Actions";
 import { InputBlock, InputSelect, Label } from "../../Styles/General.styles";
+import { ConversationHistoryProps, RateListProps } from "../../Type/Type";
 import { CalculatedResult, CalculationBlock, CalculationCapital, CalculationSmall, ConvertBigLetter, ConvertButton, FilterBlock, Input, SwapButton, Title } from "./Converter.styles";
 
 const Converter: FC<ConverterProps> = ({ calculation, listRates }) => {
+  console.log(listRates);
   const dispatch = useDispatch();
   const [amount, setAmount] = useState<number>(0);
   const [selectOne, setSelectOne] = useState<string>(localStorage.getItem('currency') || "EUR");
@@ -30,7 +32,7 @@ const Converter: FC<ConverterProps> = ({ calculation, listRates }) => {
 
   const currencyTwo = (value: ChangeEvent<HTMLSelectElement>) => {
     setSelectTwo(value.target.value);
-    const current: any = listRates.filter((element: any) => element.currency === value.target.value);
+    const current: any = listRates.filter((item: RateListProps) => item.currency === value.target.value);
     setCurrentCurrency(current[0].rate);
   };
 
@@ -47,7 +49,7 @@ const Converter: FC<ConverterProps> = ({ calculation, listRates }) => {
   let data = localStorage.getItem("history");
   let historyArray: Array<any> = data ? JSON.parse(data) : [];
 
-  const storeData = (data: any) => {
+  const storeData = (data: ConversationHistoryProps) => {
     historyArray.push(data);
     localStorage.setItem(
       'history',
@@ -66,7 +68,7 @@ const Converter: FC<ConverterProps> = ({ calculation, listRates }) => {
   const convert = () => {
     dispatch(getCurrency(selectOne));
     const history = {
-      id: nanoid(),
+      id: Number(nanoid()),
       date: Date.now(),
       amount: amount,
       from: selectOne,
@@ -97,7 +99,7 @@ const Converter: FC<ConverterProps> = ({ calculation, listRates }) => {
             onChange={currencyOne}
             value={selectOne}
           >
-            {listRates?.filter((item: any) => item.currency !== selectTwo).map((item: { currency: string, rate: string, timestamp: string; }, index: number) => (
+            {listRates?.filter((item: RateListProps) => item.currency !== selectTwo).map((item: { currency: string, rate: string, timestamp: string; }, index: number) => (
               <option key={index} value={item.currency}>{index === 0 ? "Please choose currency" : item.currency}</option>
             ))}
           </InputSelect>
@@ -111,7 +113,7 @@ const Converter: FC<ConverterProps> = ({ calculation, listRates }) => {
             onChange={currencyTwo}
             value={selectTwo}
           >
-            {listRates?.filter((item: any) => item.currency !== selectOne).map((item: { currency: string, rate: string, timestamp: string; }, index: number) => (
+            {listRates?.filter((item: RateListProps) => item.currency !== selectOne).map((item: { currency: string, rate: string, timestamp: string; }, index: number) => (
               <option key={index} value={item.currency}>{index === 0 ? "Please choose currency" : item.currency}</option>
             ))}
           </InputSelect>
@@ -133,12 +135,10 @@ const Converter: FC<ConverterProps> = ({ calculation, listRates }) => {
   );
 };
 
-const mapStateToProps = (state: any) => {
-  return {
-    listRates: state.reducer.rateList,
-    calculation: state.reducer.calculationData || [],
-  };
-};
+const mapStateToProps = (state: any) => ({
+  listRates: state.reducer.rateList,
+  calculation: state.reducer.calculationData || [],
+});
 
 const connector = connect(mapStateToProps);
 type ConverterProps = ConnectedProps<typeof connector>;

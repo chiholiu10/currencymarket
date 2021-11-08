@@ -3,7 +3,8 @@
     "target": "es6",
     "lib": [
       "dom",
-      "dom.iterable"
+      "dom.iterable",
+      "ES2021.String"
     ],
     "allowJs": true,
     "skipLibCheck": true,

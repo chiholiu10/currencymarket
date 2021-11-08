@@ -1,4 +1,4 @@
-import { FC, memo, useCallback, useEffect, useState } from "react";
+import { ChangeEvent, FC, memo, useCallback, useEffect, useState } from "react";
 import { connect, ConnectedProps, useDispatch } from "react-redux";
 import { saveHistory } from "../../Actions";
 import { getExchangeHistory } from "../../Services/api";
@@ -29,9 +29,10 @@ const ExchangeHistory: FC<ExchangeHistoryProps> = ({ currentCurrency, storeHisto
     loadHistory(currentCurrency, today, days);
   }, [loadHistory, currentCurrency, today, days]);
 
-  const handleDurationChange = (e: any) => {
-    setDayValue(e.target.value);
-    setHistoryDays(e.target.value);
+  const handleDurationChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const target = e.target as HTMLSelectElement;
+    setDayValue(target.value);
+    setHistoryDays(Number(target.value));
   };
 
   const sumValues = storeHistory.reduce((accumulator: string, currentValue: { rate: string; }) => {
@@ -40,7 +41,6 @@ const ExchangeHistory: FC<ExchangeHistoryProps> = ({ currentCurrency, storeHisto
 
   return (
     <div>
-
       <h2>Exchange History</h2>
       <InputBlock>
         <Label>Duration</Label>
@@ -101,14 +101,12 @@ const ExchangeHistory: FC<ExchangeHistoryProps> = ({ currentCurrency, storeHisto
   );
 };
 
-const mapStateToProps = (state: any) => {
-  return {
-    fromValue: state.reducer.fromValue,
-    currency: state.reducer.rates,
-    currentCurrency: state.reducer.currency || "EU",
-    storeHistory: state.reducer.historyData || []
-  };
-};
+const mapStateToProps = (state: any) => ({
+  fromValue: state.reducer.fromValue,
+  currency: state.reducer.rates,
+  currentCurrency: state.reducer.currency || "EU",
+  storeHistory: state.reducer.historyData || []
+});
 
 const connector = connect(mapStateToProps);
 type ExchangeHistoryProps = ConnectedProps<typeof connector>;

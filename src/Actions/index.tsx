@@ -1,3 +1,5 @@
+import { CalculationDataProps, ConversationHistoryProps, HistoryDataProps, RateListProps } from "../Type/Type";
+
 export const types = {
   GET_DATA: "GET_DATA",
   SAVE_HISTORY: "SAVE_HISTORY",
@@ -12,11 +14,6 @@ export const getData = (data: Array<string | number>) => ({
   data
 });
 
-type HistoryDataProps = {
-  timestamp: string;
-  rate: string;
-};
-
 export const saveHistory = (historyData: HistoryDataProps) => ({
   type: types.SAVE_HISTORY,
   historyData
@@ -27,17 +24,17 @@ export const getCurrency = (currency: string) => ({
   currency
 });
 
-export const showCalculation = (calculationData: any) => ({
+export const showCalculation = (calculationData: CalculationDataProps) => ({
   type: types.SHOW_CALCULATION,
   calculationData
 });
 
-export const getConversionHistory = (currentConversionHistory: any) => ({
+export const getConversionHistory = (currentConversionHistory: ConversationHistoryProps) => ({
   type: types.GET_CONVERSION_HISTORY,
   currentConversionHistory
 });
 
-export const setListRates = (rateList: any) => ({
+export const setListRates = (rateList: RateListProps) => ({
   type: types.SET_LIST_RATES,
   rateList
 });
