@@ -1,8 +1,9 @@
 import { FC, memo, useCallback, useEffect } from "react";
-import { ConversationHistoryProps, getConversionHistory } from "../../Actions";
+import { getConversionHistory } from "../../Actions";
 import { connect, ConnectedProps, useDispatch } from "react-redux";
 import { Table, Tr, Th, Td, TableColumns, Theader, Tbody } from "../../Styles/General.styles";
 import { DeleteButton } from "./Conversion.styles";
+import { ConversationHistoryProps } from "../../Type/Type";
 import moment from "moment";
 
 const ConversionHistory: FC<ConversionHistoryProps> = ({ storeHistory }) => {
@@ -48,7 +49,7 @@ const ConversionHistory: FC<ConversionHistoryProps> = ({ storeHistory }) => {
                 <Tr key={item.id}>
                   <Td>{moment(item.date).format("DD/MM/YYYY") + " @ " + moment(item.date).format("HH:mm")}</Td>
                   <Td>Converted an amount {item.amount} {item.from} of {item.to}</Td>
-                  <Td><DeleteButton onClick={() => deleteHistory(String(item.id))}>delete</DeleteButton></Td>
+                  <Td><DeleteButton onClick={() => deleteHistory(item.id)}>delete</DeleteButton></Td>
                 </Tr>
               )
               )
