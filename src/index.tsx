@@ -6,6 +6,9 @@ import reducer from './Reducers';
 import thunk from "redux-thunk";
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom";
+import { CSSreset } from './Styles/CssReset';
+import { ThemeProvider } from 'styled-components';
+import theme from './Styles/Theme';
 
 const store = createStore(
   reducer,
@@ -14,9 +17,13 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <CSSreset />
+      <BrowserRouter>
+
+        <App />
+      </BrowserRouter>
+    </ThemeProvider>
   </Provider>,
   document.getElementById('root')
 );

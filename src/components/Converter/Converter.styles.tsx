@@ -40,6 +40,7 @@ export const ConvertButton = styled.button`
   width: 100px;
   border-radius: 5px;
   height: 40px;
+  text-align: center;
   :disabled {
     opacity: 0.5;
   }

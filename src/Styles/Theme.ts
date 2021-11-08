@@ -19,8 +19,8 @@ const theme: DefaultTheme = {
     black: 900
   },
   fonts: {
-    heading: '"Raleway", sans-serif',
-    body: '"Raleway", sans-serif'
+    heading: "'Raleway', sans-serif",
+    body: "'Raleway', sans-serif"
   },
   breakpoints: [200, 640, 768, 1024, 1440]
 };
