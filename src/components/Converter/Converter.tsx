@@ -2,6 +2,7 @@ import { nanoid } from "nanoid";
 import { FC, useState, memo, ChangeEvent } from "react";
 import { connect, ConnectedProps, useDispatch } from "react-redux";
 import { getConversionHistory, getCurrency, showCalculation } from "../../Actions";
+import { InputBlock, InputSelect, Label } from "../../Styles/General.styles";
 import { CalculatedResult, CalculationBlock, CalculationCapital, CalculationSmall, ConvertBigLetter, ConvertButton, FilterBlock, Input, SwapButton, Title } from "./Converter.styles";
 
 const Converter: FC<ConverterProps> = ({ calculation, listRates }) => {
