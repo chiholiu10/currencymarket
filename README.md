@@ -34,7 +34,7 @@ In the project directory, you can run:
 - @testing-library/react: ^11.1.0
 - @testing-library/user-event: ^12.1.10
 - dot-env: ^0.0.1
-- eslint: ^7.32.0",
+- eslint: ^7.32.0
 - eslint-config-airbnb: ^18.2.1
 - moment: ^2.29.1
 - nanoid: ^3.1.30
