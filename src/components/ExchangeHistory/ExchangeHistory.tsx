@@ -95,7 +95,7 @@ const ExchangeHistory: FC<ExchangeHistoryProps> = ({ currentCurrency, storeHisto
             </Table>
           </TableBlock>
         </TableColumns>
-      ) : <div></div>}
+      ) : <div>Loading</div>}
 
     </div>
   );
