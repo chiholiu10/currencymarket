@@ -6,15 +6,6 @@ export const Title = styled.h1`
   font-size: 22px;
   font-weight: bold;
 `;
-export const Label = styled.label`
-  font-size: 14px;
-`;
-
-export const InputBlock = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 200px;
-`;
 
 export const FilterBlock = styled.div`
   width: 100%;
@@ -84,17 +75,3 @@ export const CalculatedResult = styled.div`
 `;
 
 export const CalculationBlock = styled.div``;
-
-export const InputSelect = styled.select`
-   -o-appearance: none;
-   -ms-appearance: none;
-   -webkit-appearance: none;
-   -moz-appearance: none;
-   appearance: none;
-  padding: 10px 0;
-  outline: none;
-  border: none;
-  min-width: 200px;
-  border-bottom: 2px solid ${theme.colors.lightgrey};
-  margin-bottom: 50px;
-`;

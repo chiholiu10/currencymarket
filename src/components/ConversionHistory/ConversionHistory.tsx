@@ -1,7 +1,7 @@
 import { FC, memo, useCallback, useEffect } from "react";
 import { getConversionHistory } from "../../Actions";
 import { connect, ConnectedProps, useDispatch } from "react-redux";
-import { Table, TableColumns, Tbody, Td, Th, Theader, Tr } from "../ExchangeHistory/ExchangeHistory.styles";
+import { Table, Tr, Th, Td, TableColumns, Theader, Tbody } from "../../Styles/General.styles";
 import { DeleteButton } from "./Conversion.styles";
 import moment from "moment";
 

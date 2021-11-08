@@ -2,9 +2,8 @@ import { FC, memo, useCallback, useEffect, useState } from "react";
 import { connect, ConnectedProps, useDispatch } from "react-redux";
 import { saveHistory } from "../../Actions";
 import { getExchangeHistory } from "../../Services/api";
+import { Table, Tr, Th, Td, TableColumns, TableBlock, Theader, Tbody, InputBlock, Label, InputSelect } from "../../Styles/General.styles";
 import moment from "moment";
-import { Table, Tr, Th, Td, TableColumns, TableBlock, Theader, Tbody } from "./ExchangeHistory.styles";
-import { InputBlock, InputSelect, Label } from "../Converter/Converter.styles";
 
 const ExchangeHistory: FC<ExchangeHistoryProps> = ({ currentCurrency, storeHistory }) => {
   const dispatch = useDispatch();
