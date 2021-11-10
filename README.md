@@ -1,5 +1,7 @@
 ## How to get this running on my local machine
 
+Don't forget to add register and get an API key from `https://p.nomics.com/cryptocurrency-bitcoin-api` before being able to get data. 
+
 ### Clone
 - Clone this repo to your local machine using `https://github.com/chiholiu10/currencymarket`
 

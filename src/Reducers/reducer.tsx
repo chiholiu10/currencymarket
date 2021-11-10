@@ -12,8 +12,6 @@ export const initialState = {
 	rateList: []
 };
 
-// ALL_RATES: "ALL_RATES"
-
 export const reducer = (state = initialState, action: any) => {
 	switch (action.type) {
 		case types.GET_DATA: {
