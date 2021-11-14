@@ -5,9 +5,12 @@ const theme: DefaultTheme = {
   colors: {
     white: "#fff",
     black: "#757575",
-    green: "#26a69a",
-    lightgrey: "#CDCDCD",
-    lightGreen: "#90ee9"
+    green: "#36a297",
+    darkGrey: "#929292",
+    grey: "#e0e0e0",
+    lightgrey: "#f2f2f2",
+    lightGreen: "#a2cd3f",
+    transparent: "#ffffff00"
   },
   // typography
   fontWeights: {
@@ -16,11 +19,11 @@ const theme: DefaultTheme = {
     semiBold: 600,
     bold: 700,
     extraBold: 800,
-    black: 900
+    extremeBold: 900
   },
   fonts: {
-    heading: "'Raleway', sans-serif",
-    body: "'Raleway', sans-serif"
+    heading: "'Akagi', sans-serif",
+    body: "'Akagi', sans-serif"
   },
   breakpoints: [200, 640, 768, 1024, 1440]
 };

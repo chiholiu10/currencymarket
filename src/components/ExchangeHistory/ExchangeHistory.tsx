@@ -2,8 +2,11 @@ import { ChangeEvent, FC, memo, useCallback, useEffect, useState } from "react";
 import { connect, ConnectedProps, useDispatch } from "react-redux";
 import { saveHistory } from "../../Actions";
 import { getExchangeHistory } from "../../Services/api";
-import { Table, Tr, Th, Td, TableColumns, TableBlock, Theader, Tbody, InputBlock, Label, InputSelect } from "../../Styles/General.styles";
+import { Table, Tr, Th, Td, TableColumns, TableBlock, Theader, Tbody, InputBlock, Label, InputSelect, InnerComponent, MainComponent } from "../../Styles/General.styles";
+import { TitleHeaderTwo } from "./ExchangeHistory.styles";
+import Chart from "../Chart/Chart";
 import moment from "moment";
+
 
 const ExchangeHistory: FC<ExchangeHistoryProps> = ({ currentCurrency, storeHistory }) => {
   const dispatch = useDispatch();
@@ -18,6 +21,7 @@ const ExchangeHistory: FC<ExchangeHistoryProps> = ({ currentCurrency, storeHisto
     setLoading(false);
     try {
       const recentHistory = await getExchangeHistory(currentCurrency, today, days);
+      console.log(recentHistory);
       dispatch(saveHistory(recentHistory));
       setLoading(true);
     } catch (err) {
@@ -40,64 +44,67 @@ const ExchangeHistory: FC<ExchangeHistoryProps> = ({ currentCurrency, storeHisto
   }, 0);
 
   return (
-    <div>
-      <h2>Exchange History</h2>
-      <InputBlock>
-        <Label>Duration</Label>
-        <InputSelect
-          value={dayValue}
-          onChange={(e) => handleDurationChange(e)}
-        >
-          <option value="7">7 days</option>
-          <option value="14">14 days</option>
-          <option value="30">30 days</option>
-        </InputSelect>
-      </InputBlock>
+    <MainComponent>
+      <InnerComponent>
+        <TitleHeaderTwo>Exchange History</TitleHeaderTwo>
+        <InputBlock>
+          <Label>Duration</Label>
+          <InputSelect
+            value={dayValue}
+            onChange={(e) => handleDurationChange(e)}
+          >
+            <option value="7">7 days</option>
+            <option value="14">14 days</option>
+            <option value="30">30 days</option>
+          </InputSelect>
+        </InputBlock>
 
-      {loading ? storeHistory.length > 0 && (
-        <TableColumns data-test-id="loaded">
-          <TableBlock>
-            <Table>
-              <Theader>
-                <Tr>
-                  <Th>Date</Th>
-                  <Th>Exchange rate</Th>
-                </Tr>
-              </Theader>
-              <Tbody>
-                {storeHistory.map((item: any, index: number) => (
-                  <Tr key={index}>
-                    <Td>{moment(item.timestamp).format("DD/MM/YYYY")}</Td>
-                    <Td>{Number(item.rate).toFixed(6)}</Td>
+        <Chart historyDays={historyDays} />
+
+        {loading ? storeHistory.length > 0 && (
+          <TableColumns data-test-id="loaded">
+            <TableBlock>
+              <Table>
+                <Theader>
+                  <Tr>
+                    <Th>Date</Th>
+                    <Th>Exchange rate</Th>
                   </Tr>
-                ))}
-              </Tbody>
-            </Table>
-          </TableBlock>
-          <TableBlock>
-            <Table>
-              <Theader>
-                <Tr>
-                  <Th>Statics</Th>
-                </Tr>
-              </Theader>
-              <Tbody>
-                <Tr>
-                  <Td>Lowest {Math.min.apply(Math, storeHistory.map((item: { rate: string; }) => item.rate)).toFixed(7)}</Td>
-                </Tr>
-                <Tr>
-                  <Td>Highest {Math.max.apply(Math, storeHistory.map((item: { rate: string; }) => item.rate)).toFixed(7)}</Td>
-                </Tr>
-                <Tr>
-                  <Td>Average {(sumValues / historyDays).toFixed(7)}</Td>
-                </Tr>
-              </Tbody>
-            </Table>
-          </TableBlock>
-        </TableColumns>
-      ) : <div>Loading</div>}
-
-    </div>
+                </Theader>
+                <Tbody>
+                  {storeHistory.map((item: any, index: number) => (
+                    <Tr key={index}>
+                      <Td>{moment(item.timestamp).format("DD/MM/YYYY")}</Td>
+                      <Td>{Number(item.rate).toFixed(6)}</Td>
+                    </Tr>
+                  ))}
+                </Tbody>
+              </Table>
+            </TableBlock>
+            <TableBlock>
+              <Table>
+                <Theader>
+                  <Tr>
+                    <Th>Statics</Th>
+                  </Tr>
+                </Theader>
+                <Tbody>
+                  <Tr>
+                    <Td>Lowest {Math.min.apply(Math, storeHistory.map((item: { rate: string; }) => item.rate)).toFixed(7)}</Td>
+                  </Tr>
+                  <Tr>
+                    <Td>Highest {Math.max.apply(Math, storeHistory.map((item: { rate: string; }) => item.rate)).toFixed(7)}</Td>
+                  </Tr>
+                  <Tr>
+                    <Td>Average {(sumValues / historyDays).toFixed(7)}</Td>
+                  </Tr>
+                </Tbody>
+              </Table>
+            </TableBlock>
+          </TableColumns>
+        ) : <div>Loading</div>}
+      </InnerComponent>
+    </MainComponent>
   );
 };
 

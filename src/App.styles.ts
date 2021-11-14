@@ -1,9 +1,11 @@
 import styled from "styled-components";
+import { breakpoint } from "./Styles/BreakPoint";
 
 export const Wrapper = styled.div`
   min-height: 100vh;
-  max-width: 900px;
   margin-left: auto;
   margin-right: auto;
-  padding-top: 50px;
+  ${breakpoint.md`
+    padding-top: 50px;
+  `}
 `;

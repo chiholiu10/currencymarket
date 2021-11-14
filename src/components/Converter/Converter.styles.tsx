@@ -5,6 +5,9 @@ import { breakpoint } from "../../Styles/BreakPoint";
 export const Title = styled.h1`
   font-size: 22px;
   font-weight: bold;
+  ${breakpoint.md`
+    font-size: 40px;
+  `}
 `;
 
 export const FilterBlock = styled.div`
@@ -12,6 +15,7 @@ export const FilterBlock = styled.div`
   display: flex;
   flex-direction: column;
   ${breakpoint.md`
+    padding: 50px 0 0;
     display: inline-flex;
     flex-direction: row;
     justify-content: space-between;
@@ -26,21 +30,28 @@ export const Input = styled.input`
   ::-webkit-inner-spin-button {
     -webkit-appearance: none;
   }
-  padding: 10px 0;
+  padding: 5px 0 2px;
   outline: none;
   border: none;
-  border-bottom: 2px solid ${theme.colors.lightgrey};
+  font-size: 14px;
+  opacity: 0.6;
+  border-bottom: 2px solid ${theme.colors.grey};
+  font-weight: ${theme.fontWeights.normal};
+  background-color: ${theme.colors.transparent};
 `;
 
+export const ConvertSpan = styled.span``;
+
 export const ConvertButton = styled.button`
-  background-color: ${theme.colors.green};
-  color:${theme.colors.white};
   font-weight: bold;
   border: none;
   width: 100px;
   border-radius: 5px;
   height: 40px;
   text-align: center;
+  margin-top: auto;
+  background-color: ${theme.colors.green};
+  color:${theme.colors.white};
   :disabled {
     opacity: 0.5;
   }
@@ -52,18 +63,25 @@ export const ConvertBigLetter = styled.span`
 `;
 
 export const CalculationCapital = styled.div`
-  font-size: 34px;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.4;
+  padding: 50px 0 20px;
+  ${breakpoint.md`
+    font-size: 40px;
+    line-height: 2.4;
+  `}
 `;
 
 export const CalculationSmall = styled.div`
-  font-size: 18px;
+  font-size: 14px;
 `;
 
 export const SwapButton = styled.button`
   background: ${theme.colors.white};
   border: 1px solid ${theme.colors.black};
-  width: 50px;
-  height: 50px;
+  width: 45px;
+  height: 45px;
   display: flex;
   align-items: center;
   justify-content: center;

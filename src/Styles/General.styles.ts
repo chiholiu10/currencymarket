@@ -12,16 +12,16 @@ export const Tr = styled.tr`
 `;
 
 export const Th = styled.th`
-  border-bottom: 1px solid ${theme.colors.black};
   padding: 10px;
   width: 200px;
   text-align: left;
+  border-bottom: 1px solid ${theme.colors.black};
 `;
 
 export const Td = styled.td`
-  border-bottom: 1px solid ${theme.colors.black};
   padding: 10px;
   height: 50px;
+  border-bottom: 1px solid ${theme.colors.black};
 `;
 
 export const TableColumns = styled.div`
@@ -45,6 +45,7 @@ export const TableBlock = styled.div`
 
 export const Label = styled.label`
   font-size: 14px;
+  text-transform: capitalize;
 `;
 
 export const InputBlock = styled.div`
@@ -53,15 +54,29 @@ export const InputBlock = styled.div`
   width: 200px;
 `;
 export const InputSelect = styled.select`
-   -o-appearance: none;
-   -ms-appearance: none;
-   -webkit-appearance: none;
-   -moz-appearance: none;
-   appearance: none;
-  padding: 10px 0;
+  appearance: none;
+  margin: 30px 0;
   outline: none;
   border: none;
   min-width: 200px;
-  border-bottom: 2px solid ${theme.colors.lightgrey};
-  margin-bottom: 50px;
+  font-size: 14px;
+  font-weight: ${theme.fontWeights.extremeBold};
+  background-color: ${theme.colors.transparent};
+  border-bottom: 2px solid ${theme.colors.grey};
+  ${breakpoint.md`
+    padding: 6px 0 2px;
+    margin: initial;
+  `}
+`;
+
+export const MainComponent = styled.div`
+  padding: 50px 0;
+  background-color: ${theme.colors.lightgrey};
+`;
+
+export const InnerComponent = styled.div`
+  max-width: 900px;
+  padding: 20px;
+  margin-left: auto;
+  margin-right: auto;
 `;

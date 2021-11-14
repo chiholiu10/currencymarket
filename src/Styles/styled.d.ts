@@ -21,7 +21,7 @@ declare module 'styled-components' {
       semiBold?: string | number;
       bold?: string | number;
       extraBold?: string | number;
-      black?: string | number;
+      extremeBold?: string | number;
     };
     fonts: {
       heading: string;

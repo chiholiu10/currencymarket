@@ -2,13 +2,14 @@ import { nanoid } from "nanoid";
 import { FC, useState, memo } from "react";
 import { connect, ConnectedProps, useDispatch } from "react-redux";
 import { getConversionHistory, getCurrency, showCalculation } from "../../Actions";
+import { InnerComponent, MainComponent } from "../../Styles/General.styles";
 import { ConversationHistoryProps } from "../../Type/Type";
 import { AmountInput } from "../FilterBlock/AmountInput/AmountInput";
 import { ConverterButton } from "../FilterBlock/ConverterButton/ConverterButton";
 import FirstCurrencyFilter from "../FilterBlock/FirstCurrencyFilter/FirstCurrencyFilter";
 import SecondCurrencyFilter from "../FilterBlock/SecondCurrencyFilter/SecondCurrencyFilter";
 import { SwapButtonComponent } from "../FilterBlock/SwapButton/SwapButton";
-import { CalculatedResult, CalculationBlock, CalculationCapital, CalculationSmall, ConvertBigLetter, FilterBlock, Title } from "./Converter.styles";
+import { CalculatedResult, CalculationBlock, CalculationCapital, CalculationSmall, ConvertBigLetter, ConvertSpan, FilterBlock, Title } from "./Converter.styles";
 
 const Converter: FC<ConverterProps> = ({ calculation }) => {
   const dispatch = useDispatch();
@@ -19,9 +20,7 @@ const Converter: FC<ConverterProps> = ({ calculation }) => {
   const disabledSwap: boolean = selectOne.length === 0 || selectTwo.length === 0;
 
   const moneyAmount = (currentAmount: any) => {
-    console.log(currentAmount.key);
     const value = currentAmount.target.value.replace(/^0+(\d)$/, '$1');
-    console.log(typeof value);
     setAmount(value);
   };
 
@@ -70,56 +69,57 @@ const Converter: FC<ConverterProps> = ({ calculation }) => {
   };
 
   return (
-    <div>
-      <Title>I want to convert</Title>
-      <FilterBlock>
+    <MainComponent>
+      <InnerComponent>
+        <Title>I want to convert</Title>
+        <FilterBlock>
+          <AmountInput
+            labelText="Amount"
+            amount={amount}
+            getNumber={moneyAmount}
+          />
 
-        <AmountInput
-          labelText="Amount"
-          amount={amount}
-          getNumber={moneyAmount}
-        />
+          <FirstCurrencyFilter
+            labelText="from"
+            selectOne={selectOne}
+            selectTwo={selectTwo}
+            setSelectOne={setSelectOne}
+          />
 
-        <FirstCurrencyFilter
-          labelText="from"
-          selectOne={selectOne}
-          selectTwo={selectTwo}
-          setSelectOne={setSelectOne}
-        />
+          <SwapButtonComponent
+            selectOne={selectOne}
+            selectTwo={selectTwo}
+            setSelectOne={setSelectOne}
+            setSelectTwo={setSelectTwo}
+          />
 
-        <SwapButtonComponent
-          selectOne={selectOne}
-          selectTwo={selectTwo}
-          setSelectOne={setSelectOne}
-          setSelectTwo={setSelectTwo}
-        />
+          <SecondCurrencyFilter
+            labelText="to"
+            selectOne={selectOne}
+            selectTwo={selectTwo}
+            setSelectTwo={setSelectTwo}
+            setCurrentCurrency={setCurrentCurrency}
+          />
 
-        <SecondCurrencyFilter
-          labelText="to"
-          selectOne={selectOne}
-          selectTwo={selectTwo}
-          setSelectTwo={setSelectTwo}
-          setCurrentCurrency={setCurrentCurrency}
-        />
+          <ConverterButton
+            clickFromChild={convert}
+            disabledSwap={disabledSwap}
+            amount={amount}
+          />
 
-        <ConverterButton
-          clickFromChild={convert}
-          disabledSwap={disabledSwap}
-          amount={amount}
-        />
+        </FilterBlock>
+        <CalculatedResult>
 
-      </FilterBlock>
-      <CalculatedResult>
-
-        {calculation.length !== 0 && (
-          <CalculationBlock>
-            <CalculationCapital>{calculation.firstCurrency} <span> = </span> <ConvertBigLetter>{calculation.secondCurrency}</ConvertBigLetter></CalculationCapital>
-            <CalculationSmall>{calculation.valueFirstCurrency}</CalculationSmall>
-            <CalculationSmall>{calculation.valueSecondCurrency}</CalculationSmall>
-          </CalculationBlock>
-        )}
-      </CalculatedResult>
-    </div>
+          {calculation.length !== 0 && (
+            <CalculationBlock>
+              <CalculationCapital>{calculation.firstCurrency} <ConvertSpan> = </ConvertSpan> <ConvertBigLetter>{calculation.secondCurrency}</ConvertBigLetter></CalculationCapital>
+              <CalculationSmall>{calculation.valueFirstCurrency}</CalculationSmall>
+              <CalculationSmall>{calculation.valueSecondCurrency}</CalculationSmall>
+            </CalculationBlock>
+          )}
+        </CalculatedResult>
+      </InnerComponent>
+    </MainComponent>
   );
 };
 
