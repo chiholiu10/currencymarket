@@ -1,6 +1,7 @@
 import { types } from "../Actions";
+import { StateProps } from "../Type/Type";
 
-export const initialState = {
+export const initialState: StateProps = {
 	loaded: false,
 	toValue: 0,
 	fromValue: 0,

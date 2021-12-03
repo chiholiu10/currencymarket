@@ -1,3 +1,15 @@
+export type StateProps = {
+  loaded: boolean;
+  toValue: number;
+  fromValue: number;
+  data: Array<number | string>;
+  currency: string;
+  historyData: any;
+  calculationData: Array<number | string>;
+  currentConversionHistory: Array<number | string>;
+  rateList: Array<number | string>;
+};
+
 export type ConversationHistoryProps = {
   amount: string | number;
   date: string | number;
